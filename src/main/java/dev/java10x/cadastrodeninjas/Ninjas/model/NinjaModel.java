@@ -1,4 +1,4 @@
-package dev.java10x.cadastrodeninjas.Ninjas.controller.model;
+package dev.java10x.cadastrodeninjas.Ninjas.model;
 
 
 import dev.java10x.cadastrodeninjas.Missoes.Model.MissoesModel;
@@ -21,6 +21,9 @@ public class NinjaModel {
 
     @Column(unique = true)
     private String email;
+
+    @Column(name = "img_url")
+    private String imgURL;
 
     private int idade;
 

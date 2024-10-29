@@ -1,6 +1,6 @@
 package dev.java10x.cadastrodeninjas.Missoes.Model;
 
-import dev.java10x.cadastrodeninjas.Ninjas.controller.model.NinjaModel;
+import dev.java10x.cadastrodeninjas.Ninjas.model.NinjaModel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +17,9 @@ public class MissoesModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
+
     private String dificuldade;
 
 
