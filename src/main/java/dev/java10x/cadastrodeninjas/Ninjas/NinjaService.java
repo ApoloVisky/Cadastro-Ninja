@@ -21,7 +21,14 @@ public class NinjaService {
         return ninjaRepository.findAll();
     }
 
-    public Optional<NinjaModel> listarNinjaPorId(Long id) {
-        return ninjaRepository.findById(id);
+    public NinjaModel listarNinjaPorId(Long id) {
+        Optional<NinjaModel> ninjaPorId = ninjaRepository.findById(id);
+        return ninjaPorId.orElse(null);
+    }
+
+    public NinjaModel deletarNinjaPorId(Long id) {
+        Optional<NinjaModel> ninjaPorId = ninjaRepository.findById(id);
+        ninjaPorId.ifPresent(ninjaModel -> ninjaRepository.findById(id));
+        return ninjaPorId.orElse(null);
     }
 }
