@@ -1,4 +1,4 @@
-package dev.java10x.cadastrodeninjas.Ninjas.controller;
+package dev.java10x.cadastrodeninjas.Ninjas;
 
 import org.springframework.web.bind.annotation.*;
 
