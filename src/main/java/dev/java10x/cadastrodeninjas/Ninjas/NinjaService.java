@@ -31,4 +31,8 @@ public class NinjaService {
         ninjaPorId.ifPresent(ninjaModel -> ninjaRepository.findById(id));
         return ninjaPorId.orElse(null);
     }
+
+    public NinjaModel adicionarNinjas(NinjaModel ninja) {
+        return ninjaRepository.save(ninja);
+    }
 }
