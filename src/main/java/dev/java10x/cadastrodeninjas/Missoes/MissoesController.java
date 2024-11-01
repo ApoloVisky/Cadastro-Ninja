@@ -3,21 +3,33 @@ package dev.java10x.cadastrodeninjas.Missoes;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/missoes")
 public class MissoesController {
 
+    private MissoesService missoesService;
+
+    public MissoesController(MissoesService missoesService) {
+        this.missoesService = missoesService;
+    }
 
     // GET - Manda uma requisição para listar as missoes
     @GetMapping("/listar")
-    public String listarMissoes(){
-        return "Missões listadas com sucesso";
+    public List<MissoesModel> listarMissoes(){
+        return missoesService.listarMissoes();
+    }
+
+    @GetMapping("/listar/{id}")
+    public  MissoesModel listarMissoesPorID(@PathVariable Long id) {
+        return missoesService.listarMissoesPorID(id);
     }
 
     // POST - Manda uma requisição para criar as missoes
     @PostMapping("/criar")
-    public String criarMissao(){
-        return "Missão criada com sucesso!";
+    public MissoesModel criarMissao(@RequestBody MissoesModel missoesModel){
+        return missoesService.criarMissoes(missoesModel);
     }
 
     // PUT - Manda uma requisição para alterar as missoes
@@ -27,8 +39,8 @@ public class MissoesController {
     }
 
     // DELETE - Manda uma requisição para deletar as missoes
-    @DeleteMapping("/deletar")
-    public String deletarMissao(){
-        return "Missão deletada com sucesso!";
+    @DeleteMapping("/deletar/{id}")
+    public void deletarMissao(@PathVariable Long id){
+        missoesService.deletarNinja(id);
     }
 }

@@ -26,13 +26,13 @@ public class NinjaService {
         return ninjaPorId.orElse(null);
     }
 
-    public NinjaModel deletarNinjaPorId(Long id) {
-        Optional<NinjaModel> ninjaPorId = ninjaRepository.findById(id);
-        ninjaPorId.ifPresent(ninjaModel -> ninjaRepository.findById(id));
-        return ninjaPorId.orElse(null);
-    }
+   public void deletarNinjaPoriD(Long id) {
+        ninjaRepository.deleteById(id);
+   }
 
     public NinjaModel adicionarNinjas(NinjaModel ninja) {
         return ninjaRepository.save(ninja);
     }
+
+
 }
