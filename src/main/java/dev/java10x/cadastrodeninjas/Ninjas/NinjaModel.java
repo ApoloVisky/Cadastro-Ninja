@@ -27,6 +27,9 @@ public class NinjaModel {
 
     private int idade;
 
+    @Column(name = "rank")
+    private String rank;
+
     @ManyToOne // @ManyToOne  um ninja tem uma unica missao
     @JoinColumn(name = "missoes_id") //ForeignKey que faz a ligação entre as tabelas Ninja e Missoes pelo id da missao
     private MissoesModel missoes;
