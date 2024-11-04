@@ -10,6 +10,10 @@ public class MissoesService {
 
     private MissoesRepository missoesRepository;
 
+    public MissoesService(MissoesRepository missoesRepository) {
+        this.missoesRepository = missoesRepository;
+    }
+
     public MissoesModel criarMissoes(MissoesModel missoesModel) {
         return missoesRepository.save(missoesModel);
     }
@@ -23,7 +27,16 @@ public class MissoesService {
         return ninjaPorId.orElse(null);
     }
 
-    public void deletarNinja(Long id) {
+    public void deletarMissoes(Long id) {
         missoesRepository.deleteById(id);
+    }
+
+    public MissoesModel alterarMissoes(Long id, MissoesModel missoesAtualizadas) {
+        if (missoesRepository.existsById(id)){
+            missoesAtualizadas.setId(id);
+            missoesRepository.save(missoesAtualizadas);
+
+        }
+        return null;
     }
 }
