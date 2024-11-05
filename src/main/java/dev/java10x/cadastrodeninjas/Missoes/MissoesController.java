@@ -18,38 +18,46 @@ public class MissoesController {
     }
 
     @GetMapping("/listar")
-    public List<MissoesDTO> listarMissoes(){
-        return missoesService.listarMissoes();
+    public ResponseEntity<List<MissoesDTO>> listarMissoes(){
+        List<MissoesDTO> missoes = missoesService.listarMissoes();
+        return ResponseEntity.ok(missoes);
     }
 
     @GetMapping("/listar/{id}")
-    public  MissoesDTO listarMissoesPorID(@PathVariable Long id) {
-        return missoesService.listarMissoesPorID(id);
+    public  ResponseEntity<?> listarMissoesPorID(@PathVariable Long id) {
+        MissoesDTO missoes = missoesService.listarMissoesPorID(id);
+
+        if (missoes != null) {
+            return ResponseEntity.ok(missoes);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Missão com o ID "+ id + " não localizada em nossos registros;");
     }
 
     @PostMapping("/criar")
-    public ResponseEntity<String> criarMissao(@RequestBody MissoesDTO missoesDTO){
+    public ResponseEntity<MissoesDTO> criarMissao(@RequestBody MissoesDTO missoesDTO){
         MissoesDTO missoesNovas = missoesService.criarMissoes(missoesDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Missão criada com sucesso: " + missoesNovas.getNome() + " (ID) " + missoesNovas.getId());
+                .body(missoesNovas);
     }
 
     @PutMapping("/alterar/{id}")
-    public ResponseEntity<String> alterarMissao(@PathVariable Long id, @RequestBody MissoesDTO missoesDTO){
+    public ResponseEntity<?> alterarMissao(@PathVariable Long id, @RequestBody MissoesDTO missoesDTO){
         if(missoesService.listarMissoesPorID(id) != null) {
             MissoesDTO missoes = missoesService.alterarMissoes(id, missoesDTO);
 
             return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body("Missão com o ID " + id + " alterado com sucesso para " + missoesDTO.getNome());
+                    .body(missoes);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Não foi possível alterar a missão com o ID " + id + " pois esse ID não existe");
+                .body("Missão com o ID "+ id + " não localizada em nossos registros;");
+
     }
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<String> deletarMissao(@PathVariable Long id){
         if(missoesService.listarMissoesPorID(id) != null){
-            missoesService.listarMissoesPorID(id);
+            missoesService.deletarMissoes(id);
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Missão com o ID " + id + " deletada com sucesso!");
         }
