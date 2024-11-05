@@ -77,7 +77,7 @@ public class NinjaController {
 
 
 
-    @PutMapping("/alterar/{id}")
+    @PatchMapping("/alterar/{id}")
     @Operation(summary = "Alterar ninjas", description = "Altera um ninja já criado. É preciso passar o ID do ninja e o Body da requisição")
 
     @ApiResponses(value = {
@@ -90,10 +90,11 @@ public class NinjaController {
             @Parameter(description = "Usuário manda os dados do ninja a ser atualizado no corpo da requisição")
             @RequestBody NinjaDTO ninjaDTO ){
 
-        NinjaDTO ninja = ninjaService.alterarNinja(id, ninjaDTO);
-        if (ninja != null) {
+        ninjaService.alterarNinja(id, ninjaDTO);
+
+        if (ninjaDTO != null) {
             return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body(ninja);
+                    .body(ninjaDTO);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("Ninja com o ID "+ id + " não existe em nossos regitros!");

@@ -1,6 +1,9 @@
 package dev.java10x.cadastrodeninjas.Missoes;
 
+import dev.java10x.cadastrodeninjas.Ninjas.NinjaDTO;
 import dev.java10x.cadastrodeninjas.Ninjas.NinjaMapper;
+import dev.java10x.cadastrodeninjas.Ninjas.NinjaModel;
+import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,16 +49,20 @@ public class MissoesService {
     }
 
     public MissoesDTO alterarMissoes(Long id, MissoesDTO missoesDTO) {
-        Optional<MissoesModel> missoesExistentes = missoesRepository.findById(id);
+        MissoesModel missoes = missoesRepository.findById(id)
+                .orElseThrow(() -> new OpenApiResourceNotFoundException("Ninja com o ID" + id + " não encontrado"));
 
-        if(missoesExistentes.isPresent()) {
-            MissoesModel missoesAtualizada = missoesMapper.map(missoesDTO);
-            missoesAtualizada.setId(id);
-            MissoesModel missoesSalva = missoesRepository.save(missoesAtualizada);
-
-            return missoesMapper.map(missoesSalva);
-
+        if (missoesDTO.getNome() != null) {
+            missoes.setNome(missoesDTO.getNome());
         }
-        return null;
+        if (missoesDTO.getDificuldade() != null) {
+            missoes.setDificuldade(missoesDTO.getDificuldade());
+        }
+        if (missoesDTO.getNinja() != null) {
+            missoes.setNinja(missoesDTO.getNinja());
+        }
+        missoesRepository.save(missoes);
+
+        return new MissoesDTO(missoes);
     }
 }

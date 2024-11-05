@@ -63,7 +63,7 @@ public class MissoesController {
 
 
 
-    @PutMapping("/alterar/{id}")
+    @PatchMapping("/alterar/{id}")
     @Operation(summary = "Altera a missão", description = "Altera a missão filtrada pelo seu ID")
 
     @ApiResponses(value = {
@@ -76,10 +76,10 @@ public class MissoesController {
             @Parameter(description = "Usuário manda os dados da missão a ser atualizado no corpo da requisição")
             @RequestBody MissoesDTO missoesDTO){
         if(missoesService.listarMissoesPorID(id) != null) {
-            MissoesDTO missoes = missoesService.alterarMissoes(id, missoesDTO);
+            missoesService.alterarMissoes(id, missoesDTO);
 
             return ResponseEntity.status(HttpStatus.ACCEPTED)
-                    .body(missoes);
+                    .body(missoesDTO);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("Missão com o ID "+ id + " não localizada em nossos registros;");
