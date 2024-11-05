@@ -52,15 +52,7 @@ public class MissoesService {
         MissoesModel missoes = missoesRepository.findById(id)
                 .orElseThrow(() -> new OpenApiResourceNotFoundException("Ninja com o ID" + id + " não encontrado"));
 
-        if (missoesDTO.getNome() != null) {
-            missoes.setNome(missoesDTO.getNome());
-        }
-        if (missoesDTO.getDificuldade() != null) {
-            missoes.setDificuldade(missoesDTO.getDificuldade());
-        }
-        if (missoesDTO.getNinja() != null) {
-            missoes.setNinja(missoesDTO.getNinja());
-        }
+        missoesMapper.updateMissiomFromDto(missoesDTO, missoes);
         missoesRepository.save(missoes);
 
         return new MissoesDTO(missoes);

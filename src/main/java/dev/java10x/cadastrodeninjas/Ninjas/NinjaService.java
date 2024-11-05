@@ -1,7 +1,7 @@
 package dev.java10x.cadastrodeninjas.Ninjas;
 
 
-import lombok.Data;
+
 import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 @Service
 public class NinjaService {
 
-    private NinjaRepository ninjaRepository;
-    private NinjaMapper ninjaMapper;
+    private final NinjaRepository ninjaRepository;
+    private final NinjaMapper ninjaMapper;
 
     public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
@@ -49,25 +49,8 @@ public class NinjaService {
     public NinjaDTO alterarNinja(Long id, NinjaDTO ninjaDTO) {
       NinjaModel ninjaExistente = ninjaRepository.findById(id)
               .orElseThrow(() -> new OpenApiResourceNotFoundException("Ninja com o ID" + id + " não encontrado"));
+     ninjaMapper.updateNinjaFromDto(ninjaDTO, ninjaExistente);
 
-      if (ninjaDTO.getNome() != null) {
-          ninjaExistente.setNome(ninjaDTO.getNome());
-      }
-      if (ninjaDTO.getEmail() != null) {
-          ninjaExistente.setEmail(ninjaDTO.getEmail());
-      }
-      if (ninjaDTO.getIdade() != null) {
-          ninjaExistente.setIdade(ninjaDTO.getIdade());
-      }
-      if (ninjaDTO.getImgURL() != null) {
-          ninjaExistente.setImgURL(ninjaDTO.getImgURL());
-      }
-      if (ninjaDTO.getRank() != null){
-          ninjaExistente.setRank(ninjaDTO.getRank());
-      }
-      if (ninjaDTO.getMissoes() != null){
-          ninjaExistente.setMissoes(ninjaDTO.getMissoes());
-      }
       ninjaRepository.save(ninjaExistente);
 
       return new NinjaDTO(ninjaExistente);

@@ -1,5 +1,7 @@
 package dev.java10x.cadastrodeninjas.Missoes;
 
+import dev.java10x.cadastrodeninjas.Ninjas.NinjaDTO;
+import dev.java10x.cadastrodeninjas.Ninjas.NinjaModel;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,6 +28,19 @@ public class MissoesMapper {
         missoesModel.setNinja(missoesDTO.getNinja());
 
         return missoesModel;
+    }
+
+    public void updateMissiomFromDto(MissoesDTO missoesDTO, MissoesModel missoes) {
+
+        if (missoesDTO.getNome() != null) {
+            missoes.setNome(missoesDTO.getNome());
+        }
+        if (missoesDTO.getDificuldade() != null) {
+            missoes.setDificuldade(missoesDTO.getDificuldade());
+        }
+        if (missoesDTO.getNinja() != null) {
+            missoes.setNinja(missoesDTO.getNinja());
+        }
     }
 
 }

@@ -32,4 +32,25 @@ public class NinjaMapper {
 
         return ninjaDTO;
     }
+
+    public void updateNinjaFromDto(NinjaDTO ninjaDTO, NinjaModel ninjaModel) {
+        if (ninjaDTO.getNome() != null) {
+            ninjaModel.setNome(ninjaDTO.getNome());
+        }
+        if (ninjaDTO.getIdade() != null) {
+            ninjaModel.setIdade(ninjaDTO.getIdade());
+        }
+        if (ninjaDTO.getEmail() != null) {
+            ninjaModel.setEmail(ninjaDTO.getEmail());
+        }
+        if (ninjaDTO.getImgURL() != null) {
+            ninjaModel.setImgURL(ninjaDTO.getImgURL());
+        }
+        if (ninjaDTO.getRank() != null) {
+            ninjaModel.setRank(ninjaDTO.getRank());
+        }
+        if (ninjaDTO.getMissoes() != null) {
+            ninjaModel.setMissoes(ninjaDTO.getMissoes());
+        }
+    }
 }
