@@ -1,6 +1,8 @@
 package dev.java10x.cadastrodeninjas.Missoes;
 
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +17,6 @@ public class MissoesController {
         this.missoesService = missoesService;
     }
 
-    // GET - Manda uma requisição para listar as missoes
     @GetMapping("/listar")
     public List<MissoesDTO> listarMissoes(){
         return missoesService.listarMissoes();
@@ -26,21 +27,33 @@ public class MissoesController {
         return missoesService.listarMissoesPorID(id);
     }
 
-    // POST - Manda uma requisição para criar as missoes
     @PostMapping("/criar")
-    public MissoesDTO criarMissao(@RequestBody MissoesDTO missoesDTO){
-        return missoesService.criarMissoes(missoesDTO);
+    public ResponseEntity<String> criarMissao(@RequestBody MissoesDTO missoesDTO){
+        MissoesDTO missoesNovas = missoesService.criarMissoes(missoesDTO);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Missão criada com sucesso: " + missoesNovas.getNome() + " (ID) " + missoesNovas.getId());
     }
 
-    // PUT - Manda uma requisição para alterar as missoes
     @PutMapping("/alterar/{id}")
-    public MissoesDTO alterarMissao(@PathVariable Long id, @RequestBody MissoesDTO missoesDTO){
-        return missoesService.alterarMissoes(id, missoesDTO);
+    public ResponseEntity<String> alterarMissao(@PathVariable Long id, @RequestBody MissoesDTO missoesDTO){
+        if(missoesService.listarMissoesPorID(id) != null) {
+            MissoesDTO missoes = missoesService.alterarMissoes(id, missoesDTO);
+
+            return ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body("Missão com o ID " + id + " alterado com sucesso para " + missoesDTO.getNome());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Não foi possível alterar a missão com o ID " + id + " pois esse ID não existe");
     }
 
-    // DELETE - Manda uma requisição para deletar as missoes
     @DeleteMapping("/deletar/{id}")
-    public void deletarMissao(@PathVariable Long id){
-        missoesService.deletarMissoes(id);
+    public ResponseEntity<String> deletarMissao(@PathVariable Long id){
+        if(missoesService.listarMissoesPorID(id) != null){
+            missoesService.listarMissoesPorID(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Missão com o ID " + id + " deletada com sucesso!");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Não foi possível excluir a missão com o ID "+ id + " pois ela não existe");
     }
 }
