@@ -55,6 +55,6 @@ public class MissoesService {
         missoesMapper.updateMissiomFromDto(missoesDTO, missoes);
         missoesRepository.save(missoes);
 
-        return new MissoesDTO(missoes);
+        return missoesMapper.map(missoes);
     }
 }

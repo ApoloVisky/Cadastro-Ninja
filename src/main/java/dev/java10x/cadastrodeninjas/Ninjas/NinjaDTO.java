@@ -20,8 +20,6 @@ public class NinjaDTO {
     private MissoesModel missoes;
 
 
-    public NinjaDTO(NinjaModel ninjaExistente) {
-    }
 
 
 }

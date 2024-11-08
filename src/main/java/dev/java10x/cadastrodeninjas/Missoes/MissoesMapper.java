@@ -1,7 +1,6 @@
 package dev.java10x.cadastrodeninjas.Missoes;
 
-import dev.java10x.cadastrodeninjas.Ninjas.NinjaDTO;
-import dev.java10x.cadastrodeninjas.Ninjas.NinjaModel;
+
 import org.springframework.stereotype.Component;
 
 @Component

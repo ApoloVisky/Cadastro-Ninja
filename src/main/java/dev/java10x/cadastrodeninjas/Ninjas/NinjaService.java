@@ -46,13 +46,13 @@ public class NinjaService {
         return ninjaMapper.map(ninja);
     }
 
-    public NinjaDTO alterarNinja(Long id, NinjaDTO ninjaDTO) {
+    public void alterarNinja(Long id, NinjaDTO ninjaDTO) {
       NinjaModel ninjaExistente = ninjaRepository.findById(id)
               .orElseThrow(() -> new OpenApiResourceNotFoundException("Ninja com o ID" + id + " não encontrado"));
      ninjaMapper.updateNinjaFromDto(ninjaDTO, ninjaExistente);
 
       ninjaRepository.save(ninjaExistente);
 
-      return new NinjaDTO(ninjaExistente);
+        ninjaMapper.map(ninjaExistente);
     }
 }
